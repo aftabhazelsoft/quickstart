@@ -36,14 +36,20 @@ namespace MvcClient
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    // Identity Server (which is storing my identity)
+                    // Identity Server (which is storing my users' identities)
                     options.Authority = "https://localhost:5001";
+
+                    options.SignInScheme = "Cookies";
+                    options.RequireHttpsMetadata = false;
                     
                     options.ClientId = "mvc"; // This is my name
                     options.ClientSecret = "secret"; // This is my secret we agreed ahead of time
-                    options.ResponseType = "code"; // This respone type i am going to need
+                    //options.ResponseType = "code";
+                    options.ResponseType = "token id_token"; // This respone type i am going to need
+                    //options.ResponseType = "code id_token";
 
                     options.Scope.Add("profile"); // In required scopes please add user profile info
+                    options.Scope.Add("api1"); // To call api from mvc client
                     options.GetClaimsFromUserInfoEndpoint = true; // To get additional claims
 
                     options.SaveTokens = true; // Save all information in authorization cookie

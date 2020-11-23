@@ -39,6 +39,9 @@ namespace Client
 
             // Calling the API - Uncomment following code to call api endpoint which will return user claims
             //*
+            Console.WriteLine();
+            Console.WriteLine();
+
             var apiClient = new HttpClient();
             apiClient.SetBearerToken(tokenResponse.AccessToken);
 

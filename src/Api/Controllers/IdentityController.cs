@@ -14,7 +14,12 @@ namespace Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return new JsonResult(from c in User.Claims select new {c.Type, c.Value});
+            var claims = new JsonResult(from c in User.Claims select new {c.Type, c.Value});
+            return Ok(new
+            {
+                message = "Hello From MVC Core API!", 
+                claims
+            });
         }
     }
 }

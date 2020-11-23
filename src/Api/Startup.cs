@@ -32,13 +32,11 @@ namespace Api
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = "https://localhost:5001";
-
+                    options.RequireHttpsMetadata = false;
+                    options.Audience = "api1";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        // To control if the audience will be validated during token validation.
-                        // Validation of the audience, For example, a site that receives a token, could not replay it to another side.
-                        // A forwarded token would contain the audience of the original site.
-                        ValidateAudience = false
+                        ValidateAudience = true,
                     };
                 });
         }

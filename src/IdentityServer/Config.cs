@@ -14,7 +14,7 @@ namespace IdentityServer
             new IdentityResource[]
             { 
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile() 
+                new IdentityResources.Profile()
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -23,43 +23,44 @@ namespace IdentityServer
                 new ApiScope("api1", "My API")
             };
 
+        public static IEnumerable<ApiResource> ApiResources =>
+            new List<ApiResource>
+            {
+                new ApiResource("api1", "My API")
+                {
+                    Scopes = { "api1"}
+                }
+
+            };
+
         public static IEnumerable<Client> Clients =>
             new List<Client>
             {
-                new Client
-                {
-                    ClientId = "client",
-
-                    // no interactive user, use the clientid/secret for authentication
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-
-                    // secret for authentication
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-
-                    AllowedScopes = { "api1" }
-                },
                 // interactive ASP.NET Core MVC client
                 new Client
                 {
-                    ClientId = "mvc",
-                    ClientSecrets = {new Secret("secret".Sha256())},
+                    ClientId = "mvc", // you can consider it as login name
+                    ClientSecrets = {new Secret("secret".Sha256())}, // and secret as password
 
-                    AllowedGrantTypes = GrantTypes.Code,
+                    //AllowedGrantTypes = GrantTypes.Code,
+                    AllowedGrantTypes = GrantTypes.Implicit,
 
                     // where to redirect to after login
                     RedirectUris = {"https://localhost:5002/signin-oidc"},
 
                     // where to redirect to after logout
-                    PostLogoutRedirectUris = {"https://localhost:5002/signin-callback-oidc"},
+                    PostLogoutRedirectUris = {"https://localhost:5002/signout-callback-oidc"},
 
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
-                    }
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1",
+                    },
+
+                    AllowAccessTokensViaBrowser = true,
+
+                    //RequireConsent = true,
                 }
             };
     }
