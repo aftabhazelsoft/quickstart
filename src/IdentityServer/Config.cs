@@ -1,7 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
+﻿
 using IdentityServer4.Models;
 using System.Collections.Generic;
 using IdentityServer4;
@@ -20,15 +17,15 @@ namespace IdentityServer
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
-                new ApiScope("api1", "My API")
+                new ApiScope("api1", "My API Scope")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
             new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("api1", "My API Resource")
                 {
-                    Scopes = { "api1"}
+                    Scopes = { "api1" }
                 }
 
             };
